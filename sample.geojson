@@ -1,0 +1,32 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ -122.3473413, 47.651119 ]
+      },
+      "properties": {
+        "name": "Fremont Troll",
+        "description": "The Fremont Troll is a large concrete sculpture of the mythical troll ..."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [ -122.35509749113, 47.662137946078 ],
+            [ -122.35457554776, 47.662130986833 ],
+            [...]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Fremont"
+      }
+    }
+  ]
+}
