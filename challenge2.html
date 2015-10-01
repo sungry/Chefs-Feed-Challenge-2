@@ -7,7 +7,7 @@
     <style>
       html { height: 100% }
       body { height: 100%; margin: 10; padding: 10; overflow: hidden; }
-      #map { height: 60%; width: 60%; }
+      #map { height: 80%; width: 80%;}
       #drop-container {
         display: none;
         height: 100%;
@@ -31,6 +31,7 @@
     </style>
   </head>
   <body>
+  <h1>Drag and drop GeoJSon file into the map canvas</h1>
     <div id="map"></div>
     <div id="drop-container"><div id="drop-silhouette"></div></div>
     <script>
@@ -40,17 +41,52 @@
 var map;
 
 function initMap() {
+    var customMapType = new google.maps.StyledMapType([
+      {
+        stylers: [
+          {hue: '#73B6E6'},
+          {visibility: 'simplified'},
+          {gamma: 0.5},
+          {weight: 0.5}
+        ]
+      },
+      {
+        elementType: 'labels',
+        stylers: [{visibility: 'on'}]
+      },
+      {
+        featureType: 'water',
+        stylers: [{color: '#FFFF00'}]
+      }
+    ], {
+      name: 'Custom Style'
+  });
+  var customMapTypeId = 'custom_style';
   // set up the map
   map = new google.maps.Map(document.getElementById('map'), {
     center: new google.maps.LatLng(36.778259, -119.417931),
     zoom: 6
   });
+
+
+  map.mapTypes.set(customMapTypeId, customMapType);
+  map.setMapTypeId(customMapTypeId);
 }
 
 function loadGeoJsonString(geoString) {
   var geojson = JSON.parse(geoString);
   map.data.addGeoJson(geojson);
   zoom(map);
+  map.data.setStyle({
+    draggable: true, // turn off if it gets annoying
+    editable: true,
+    strokeColor: '#2E3253',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#2E3253',
+    fillOpacity: 0.35
+  });
+
 }
 
 /**
@@ -62,6 +98,7 @@ function zoom(map) {
   map.data.forEach(function(feature) {
     processPoints(feature.getGeometry(), bounds.extend, bounds);
   });
+  console.log(bounds);
   map.fitBounds(bounds);
 }
 
@@ -86,6 +123,7 @@ function processPoints(geometry, callback, thisArg) {
 }
 
 
+
 /* DOM (drag/drop) functions */
 
 function initEvents() {
@@ -100,6 +138,7 @@ function initEvents() {
   dropContainer.addEventListener('dragover', showPanel, false);
   dropContainer.addEventListener('drop', handleDrop, false);
   dropContainer.addEventListener('dragleave', hidePanel, false);
+
 }
 
 function showPanel(e) {
@@ -119,11 +158,13 @@ function handleDrop(e) {
   hidePanel(e);
 
   var files = e.dataTransfer.files;
+
   if (files.length) {
     // process file(s) being dropped
     // grab the file data from each file
     for (var i = 0, file; file = files[i]; i++) {
       var reader = new FileReader();
+      console.log(reader);
       reader.onload = function(e) {
         loadGeoJsonString(e.target.result);
       };
@@ -144,6 +185,8 @@ function handleDrop(e) {
   // prevent drag event from bubbling further
   return false;
 }
+
+
 
 
 function initialize() {
