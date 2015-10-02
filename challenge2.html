@@ -42,21 +42,69 @@ var map;
 
 function initMap() {
     var customMapType = new google.maps.StyledMapType([
+      // {
+      //   stylers: [
+      //     {hue: '#FFF600'},
+      //     {visibility: 'simplified'},
+      //     {gamma: 0.5},
+      //     {weight: 0.5}
+      //   ]
+      // },
       {
-        stylers: [
-          {hue: '#73B6E6'},
-          {visibility: 'simplified'},
-          {gamma: 0.5},
-          {weight: 0.5}
-        ]
+        featureType: 'all',
+        elementType: 'labels',
+        stylers: [{visibility: 'on'}
+          ]
       },
       {
+        featureType: 'landscape.natural',
+        elementType: 'all',
+        stylers: [{color: '#ffe24d'},
+                  {visibility: 'simplified'}
+          ]
+      },
+      {
+        featureType: "landscape.man_made",
+        elementType: "geometry",
+        stylers: [{weight: 0.9},
+                  {visibility: 'off'}
+          ]
+      },
+      {
+        featureType: "poi.park",
+        elementType: "geometry.fill",
+        stylers: [{visibility: 'on'},
+                  {color: '#83CEAD'}
+          ]
+      },
+      {
+        featureType: 'road',
+        elementType: 'all',
+        stylers: [{color: '#FFFFFF'},
+                  {visibility: 'on'}
+          ]
+      },
+      {
+        featureType: 'road',
         elementType: 'labels',
-        stylers: [{visibility: 'on'}]
+        stylers: [{visibility: 'simplified'},
+                  {color: '#158c28'}]
       },
       {
         featureType: 'water',
-        stylers: [{color: '#FFFF00'}]
+        stylers: [{color: '#B3DEE5'}]
+      },
+      {
+        featureType: 'road.arterial',
+        stylers: [{visibility: 'on'},
+                  {color: '#FEE379'}
+          ]
+      },
+      {
+        featureType: 'road.highway',
+        stylers: [{visibility: 'on'},
+                  {color: '#FEE379'}
+        ]
       }
     ], {
       name: 'Custom Style'
