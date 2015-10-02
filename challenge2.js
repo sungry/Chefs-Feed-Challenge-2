@@ -195,8 +195,6 @@ function handleDrop(e) {
 }
 
 
-
-
 function initialize() {
   initMap();
   initEvents();
